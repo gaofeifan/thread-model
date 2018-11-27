@@ -7,4 +7,5 @@ public class Apple implements Fruit{
 		return "苹果";
 	}
 
+
 }

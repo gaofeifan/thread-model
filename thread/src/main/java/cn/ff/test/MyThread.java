@@ -8,7 +8,7 @@ public class MyThread {
 public static void main(String[] args) {
 	long time = new Date().getTime();
 	System.out.println(time);
-	String str = "1e2e90b4f56d58352bfb6119190535d7appId=1d46bc15df4c4b6a9a5710183da916c1&serialNumber=0000ff6865e8d86a&timestamp="+time;
+	String str = "1e2e90b4f56d58352bfb6119190535d7appId=1d46bc15df4c4b6a9a5710183da916c1&serialNumber=D8F5EF8A1745&timestamp="+time;
 	str  = str.toLowerCase();
 	System.out.println(str);
 	try {
@@ -19,7 +19,7 @@ public static void main(String[] args) {
     } catch (Exception e) {
        e.printStackTrace();
     }
-	String str2 = "1e2e90b4f56d58352bfb6119190535d7action=1&appId=1d46bc15df4c4b6a9a5710183da916c1&serialNumber=0000eccb1e57a0cd&timestamp="+time;
+	String str2 = "1e2e90b4f56d58352bfb6119190535d7action=1&appId=1d46bc15df4c4b6a9a5710183da916c1&serialNumber=D8F5EF8A1745&timestamp="+time;
 	str2  = str2.toLowerCase();
 	System.out.println(str2);
 	try {
