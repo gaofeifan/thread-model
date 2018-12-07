@@ -1,45 +1,93 @@
 package cn.ff.test;
 
-import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 public class MyThread {
-public static void main(String[] args) {
-	long time = new Date().getTime();
-	System.out.println(time);
-	String str = "1e2e90b4f56d58352bfb6119190535d7appId=1d46bc15df4c4b6a9a5710183da916c1&serialNumber=E3C0AD52855F&timestamp="+time;
-	str  = str.toLowerCase();
-	System.out.println(str);
-	try {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(str.getBytes());
-        System.out.println(new BigInteger(1, md.digest()).toString(16));
-        System.out.println("========================");
-    } catch (Exception e) {
-       e.printStackTrace();
-    }
-	String str2 = "1e2e90b4f56d58352bfb6119190535d7action=1&appid=1d46bc15df4c4b6a9a5710183da916c1&serialNumber=0000fd9c146828d3&timestamp="+time;
-	str2  = str2.toLowerCase();
-	System.out.println(str2);
-	try {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(str2.getBytes());
-        System.out.println(new BigInteger(1, md.digest()).toString(16));
-        System.out.println("========================");
-    } catch (Exception e) {
-       e.printStackTrace();
-    }
-	String str3 = "1e2e90b4f56d58352bfb6119190535d7action=1&appid=1d46bc15df4c4b6a9a5710183da916c1&serialNumber=0000fd9c146828d3&timestamp="+time;
-	str2  = str3.toLowerCase();
-	System.out.println(str3);
-	try {
-		MessageDigest md = MessageDigest.getInstance("MD5");
-		md.update(str3.getBytes());
-		System.out.println(new BigInteger(1, md.digest()).toString(16));
-	} catch (Exception e) {
-		e.printStackTrace();
+//	public static final String appid = "1d46bc15df4c4b6a9a5710183da916c1";
+//	public static final String appSecret = "1e2e90b4f56d58352bfb6119190535d7";
+	public static final String appid = "95b94e076c8546db9f329bbd8c0f2030";
+	public static final String appSecret = "b36441d95239bc919eac75aa18c0c54b";
+
+//	public static final String group = "49936650";
+	public static final String group = "46004526";
+
+	public static void main(String[] args) {
+		
+		System.out.println("list");
+		long time = new Date().getTime();
+		Map<String, Object> map4 = new TreeMap();
+		map4.put("appId", appid);
+		map4.put("timestamp", time);
+		map4.put("serialNumber", "CDC589E65550");
+		map4.put("sign", getSign(map4, appSecret));
+		for (Entry<String, Object> entry : map4.entrySet()) {
+			System.out.println(entry.getKey() + "========" + entry.getValue());
+		}
+		System.out.println("info");
+		Map<String, Object> map3 = new TreeMap();
+		map3.put("appId", appid);
+		map3.put("timestamp", time);
+		map3.put("serialNumber", "CDC589E65550");
+		map3.put("sign", getSign(map3, appSecret));
+		for (Entry<String, Object> entry : map3.entrySet()) {
+			System.out.println(entry.getKey() + "========" + entry.getValue());
+		}
+		System.out.println("网关");
+		Map<String, Object> map = new TreeMap();
+		map.put("appId", appid);
+		map.put("timestamp", time);
+		map.put("groupCode", group);
+		map.put("sign", getSign(map, appSecret));
+		for (Entry<String, Object> entry : map.entrySet()) {
+			System.out.println(entry.getKey() + "========" + entry.getValue());
+		}
+		
+		System.out.println("升降");
+		long time2 = new Date().getTime();
+		Map<String, Object> map2 = new TreeMap();
+		map2.put("appId", appid);
+		map2.put("action", 1);
+		map2.put("timestamp", time2);
+		map2.put("serialNumber", "F2D22403CE40");
+		map2.put("sign", getSign(map2, appSecret));
+		for (Entry<String, Object> entry : map2.entrySet()) {
+			System.out.println(entry.getKey() + "========" + entry.getValue());
+		}
+		
 	}
-	
-}
+
+	public static String getSign(Map<String, Object> map, String appSecret) {
+		StringBuilder sb = new StringBuilder(appSecret);
+		Set<Entry<String, Object>> entrySet = map.entrySet();
+		for (Entry<String, Object> entry : entrySet) {
+			sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+		}
+		System.out.println(sb.substring(0, sb.length() - 1).toLowerCase());
+		System.out.println(md5Password(sb.substring(0, sb.length() - 1).toLowerCase()));
+		return md5Password(sb.substring(0, sb.length() - 1).toLowerCase());
+	}
+
+	public static String md5Password(String password) { 
+		try { 
+		// 得到一个信息摘要器
+		MessageDigest digest = MessageDigest.getInstance("md5"); byte[] result = digest.digest(password.getBytes()); StringBuffer buffer = new StringBuffer(); 
+		// 把每一个byte 做一个与运算 0xff; 
+		for (byte b : result) { 
+			// 与运算 
+			int number = b & 0xff;
+			// 加盐
+			String str = Integer.toHexString(number); if (str.length() == 1) { buffer.append("0"); } buffer.append(str); } 
+		// 标准的md5加密后的结果 
+			return buffer.toString(); 
+		}catch (NoSuchAlgorithmException e) {
+			e.printStackTrace(); 
+			return ""; } 
+		}
 }
