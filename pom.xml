@@ -11,6 +11,8 @@
   <modules>
   	<module>thread</module>
   	<module>design-mode</module>
+  	<module>test-design-mode</module>
+  	<module>?</module>
   </modules>
   
   	<parent>
